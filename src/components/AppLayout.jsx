@@ -1,4 +1,4 @@
-import TodoColumn from '../features/boards/TodoColumn';
+import TaskColumn from '../features/boards/TaskColumn';
 
 function AppLayout() {
   return (
@@ -7,9 +7,9 @@ function AppLayout() {
       <h1 className="py-4 text-3xl font-bold">Boards</h1>
       {/* Boards */}
       <div className="shrin flex basis-full items-start gap-10">
-        <TodoColumn />
-        <TodoColumn />
-        <TodoColumn />
+        <TaskColumn />
+        <TaskColumn />
+        <TaskColumn />
       </div>
     </div>
   );

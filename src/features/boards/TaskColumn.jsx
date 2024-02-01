@@ -1,6 +1,6 @@
 import { HiOutlineDotsHorizontal, HiChevronDown } from 'react-icons/hi';
 
-function TodoColumn() {
+function TaskColumn() {
   return (
     <div className="min-h-[80%] w-60 rounded-md bg-slate-200 p-3">
       {/* Board title and dropdown button */}
@@ -30,4 +30,4 @@ function TodoColumn() {
   );
 }
 
-export default TodoColumn;
+export default TaskColumn;
