@@ -1,5 +1,13 @@
+import AppLayout from './components/AppLayout';
+import Navbar from './components/Navbar';
+
 function App() {
-  return <h1 className="text-red-400">Hello, Vite!</h1>;
+  return (
+    <div className="flex h-dvh flex-col divide-y">
+      <Navbar />
+      <AppLayout />
+    </div>
+  );
 }
 
 export default App;
