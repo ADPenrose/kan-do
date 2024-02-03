@@ -1,30 +1,24 @@
-import { HiOutlineDotsHorizontal, HiChevronDown } from 'react-icons/hi';
+import { HiChevronDown } from 'react-icons/hi';
+import Badge from '../../components/Badge';
+import ButtonAddTask from '../../components/ButtonAddTask';
 
-function TaskColumn() {
+function TaskColumn({ title, type, children }) {
   return (
-    <div className="min-h-[80%] w-60 rounded-md bg-slate-200 p-3">
+    <div className="flex h-full w-60 flex-shrink-0 flex-col gap-4 rounded-md bg-gray-200 p-3">
       {/* Board title and dropdown button */}
-      {/* TODO: Title of the column should be obtained from props */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">Todo</h2>
-        <HiChevronDown size="1.6rem" color="#64748b" />
+        <Badge text={title} type={type} />
+        <HiChevronDown
+          className="hover:cursor-pointer"
+          size="1.6rem"
+          color="#6b7280"
+        />
       </div>
-      {/* TODO: Everything below should be placed in a resuable Task component*/}
-      <div className="mt-3 flex flex-col gap-3">
-        <div className="flex flex-col justify-between gap-4 rounded bg-white p-2">
-          {/* Task title and options menu */}
-          <div className="flex items-center justify-between">
-            <span className="font-bold">Task 1</span>
-            <HiOutlineDotsHorizontal size="1.2rem" color="#64748b" />
-          </div>
-
-          {/* Task body */}
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae odit
-            nesciunt ratione animi eum mollitia cum vel eos doloribus
-            consequatur?
-          </p>
-        </div>
+      {/* Add new task button */}
+      <ButtonAddTask />
+      {/* Tasks */}
+      <div className="scrollbar flex h-full flex-grow flex-col gap-3 overflow-y-scroll pr-2">
+        {children}
       </div>
     </div>
   );
