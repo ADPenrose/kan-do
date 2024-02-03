@@ -23,12 +23,12 @@ const initialData = {
     },
     'column-2': {
       id: 'column-2',
-      title: 'In progress',
+      title: 'IN PROGRESS',
       taskIds: ['task-5', 'task-6'],
     },
     'column-3': {
       id: 'column-3',
-      title: 'Done',
+      title: 'DONE',
       taskIds: ['task-7', 'task-8', 'task-9', 'task-10'],
     },
   },
