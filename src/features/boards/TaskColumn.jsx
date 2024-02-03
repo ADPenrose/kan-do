@@ -1,13 +1,15 @@
 import { HiChevronDown } from 'react-icons/hi';
 import Badge from '../../components/Badge';
 import ButtonAddTask from '../../components/ButtonAddTask';
+import Task from '../../components/Task';
+import { Droppable } from '@hello-pangea/dnd';
 
-function TaskColumn({ title, type, children }) {
+function TaskColumn({ column, type, tasks }) {
   return (
-    <div className="flex h-full w-60 flex-shrink-0 flex-col gap-4 rounded-md bg-gray-200 p-3">
+    <div className="flex h-[42rem] w-60 flex-shrink-0 flex-col gap-4 rounded-md bg-gray-200 p-3">
       {/* Board title and dropdown button */}
       <div className="flex items-center justify-between">
-        <Badge text={title} type={type} />
+        <Badge text={column.title} type={type} />
         <HiChevronDown
           className="hover:cursor-pointer"
           size="1.6rem"
@@ -17,9 +19,28 @@ function TaskColumn({ title, type, children }) {
       {/* Add new task button */}
       <ButtonAddTask />
       {/* Tasks */}
-      <div className="scrollbar flex h-full flex-grow flex-col gap-3 overflow-y-scroll pr-2">
-        {children}
-      </div>
+      {/* We need to wrap all of our tasks inside of a Droppable component.
+      The droppableId needs to be unique within the DragDropContext */}
+      <Droppable droppableId={column.id}>
+        {/* Since the Droppable uses the render props pattern, it expects
+        its child to be a funciton that returns a RFC */}
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="h-full gap-3 "
+          >
+            {/* For each task, we render a task component. */}
+            {tasks.map((task, index) => (
+              <Task key={task.id} task={task} index={index} />
+            ))}
+
+            {/* The Droppable component also provides a placeholder that we can
+            use to maintain the layout of the tasks while a task is being dragged */}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 }
