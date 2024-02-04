@@ -15,7 +15,7 @@ function Task({ task, index }) {
           // The draggablePorps dont need to be the same as the dragHandleProps.
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`mb-3 flex flex-col justify-between gap-4 rounded bg-white p-2 transition-none ${snapshot.isDragging ? 'bg-red-600 shadow-lg outline outline-2 outline-black' : ''}`}
+          className={`mb-3 flex flex-col justify-between gap-4 rounded bg-white p-2 transition-none ${snapshot.isDragging ? 'bg-amber-50 shadow-lg outline outline-2 outline-black' : ''}`}
         >
           {/* Task title and options menu */}
           <div className="flex items-center justify-between">
