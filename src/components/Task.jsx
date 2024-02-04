@@ -9,13 +9,13 @@ function Task({ task, index }) {
     <Draggable draggableId={task.id} index={index}>
       {/* Since Draggable also uses the react props pattern, it expects
       its children to be a function. */}
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           // The draggablePorps dont need to be the same as the dragHandleProps.
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="mb-3 flex flex-col justify-between gap-4 rounded bg-white p-2"
+          className={`mb-3 flex flex-col justify-between gap-4 rounded bg-white p-2 transition-none ${snapshot.isDragging ? 'bg-amber-50 shadow-lg outline outline-2 outline-black' : ''}`}
         >
           {/* Task title and options menu */}
           <div className="flex items-center justify-between">
