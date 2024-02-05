@@ -6,7 +6,7 @@ import { Droppable } from '@hello-pangea/dnd';
 
 function TaskColumn({ column, type, tasks }) {
   return (
-    <div className="flex h-[42rem] w-60 flex-shrink-0 flex-col gap-2 rounded-md bg-gray-200">
+    <div className="flex min-h-[42rem] w-60 flex-shrink-0 flex-col gap-2 rounded-md bg-gray-200">
       {/* Board title and dropdown button */}
       <div className="flex items-center justify-between p-3">
         <Badge text={column.title} type={type} />
@@ -28,7 +28,7 @@ function TaskColumn({ column, type, tasks }) {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={`h-full gap-3 p-3 transition-colors duration-300 ${snapshot.isDraggingOver ? 'bg-blue-100' : ''}`}
+            className={`h-full flex-grow gap-3 p-3 transition-colors duration-300 ${snapshot.isDraggingOver ? 'bg-blue-100' : ''}`}
           >
             {/* For each task, we render a task component. */}
             {tasks.map((task, index) => (

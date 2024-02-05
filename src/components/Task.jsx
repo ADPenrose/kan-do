@@ -26,7 +26,7 @@ function Task({ task, index }) {
           </div>
 
           {/* Task body */}
-          <div>{task.content}</div>
+          <p>{task.content}</p>
         </div>
       )}
     </Draggable>
