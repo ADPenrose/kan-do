@@ -59,32 +59,75 @@ function AppLayout() {
     )
       return;
 
-    // If none of the thingws above happened, we need to create a copy of the
-    // tasks array of the source column.
-    const column = todoData.columns[source.droppableId];
+    // If none of the things above happened, we need to create a copy of the
+    // tasks array of the source column, and also a coy of the destination.
+    const startColumn = todoData.columns[source.droppableId];
+    const finishColumn = todoData.columns[destination.droppableId];
 
-    // Then, we need to create a new array of taskIds, and remove the task that
-    // was dragged from its position, to then add it to the new position.
-    const newTaskIds = Array.from(column.taskIds);
-    newTaskIds.splice(source.index, 1);
-    newTaskIds.splice(destination.index, 0, draggableId);
+    // If the source and destination are the same, we need to reorder the tasks
+    // in the same column.
+    if (startColumn === finishColumn) {
+      // Then, we need to create a new array of taskIds, and remove the task that
+      // was dragged from its position, to then add it to the new position.
+      const newTaskIds = Array.from(startColumn.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
 
-    // Then, we need to create a new column object, with the same properties as
-    // the original column, but with the new taskIds array.
-    const newColumn = {
-      ...column,
-      taskIds: newTaskIds,
+      // Then, we need to create a new column object, with the same properties as
+      // the original column, but with the new taskIds array.
+      const newColumn = {
+        ...startColumn,
+        taskIds: newTaskIds,
+      };
+
+      // Finally, we need to update the state of the data.
+      const newState = {
+        ...todoData,
+        columns: {
+          ...todoData.columns,
+          [newColumn.id]: newColumn,
+        },
+      };
+      setTodoData(newState);
+      return;
+    }
+
+    // If the source and destination are different, we need to move the task
+    // from the source column to the destination column.
+    // First, we need to create a new array of taskIds for the source column.
+    const startTaskIds = Array.from(startColumn.taskIds);
+    // Then, we need to remove the task that was dragged from the source column.
+    startTaskIds.splice(source.index, 1);
+    // Then, we need to create a new column object for the source column, with
+    // the new taskIds array.
+    const newStartColumn = {
+      ...startColumn,
+      taskIds: startTaskIds,
     };
 
-    // Finally, we need to update the state of the data.
+    // Once that is done, we need to create a new array of taskIds for the
+    // destination column.
+    const finishTaskIds = Array.from(finishColumn.taskIds);
+    // We add the task that was dragged to the destination column.
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    // Then, we need to create a new column object for the destination column.
+    const newFinishColumn = {
+      ...finishColumn,
+      taskIds: finishTaskIds,
+    };
+
+    // Finally, we update the state of the data.
     const newState = {
       ...todoData,
       columns: {
         ...todoData.columns,
-        [newColumn.id]: newColumn,
+        [newStartColumn.id]: newStartColumn,
+        [newFinishColumn.id]: newFinishColumn,
       },
     };
+
     setTodoData(newState);
+    return;
   }
 
   return (
