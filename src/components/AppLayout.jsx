@@ -1,44 +1,29 @@
-import { useState } from 'react';
 import TaskColumn from '../features/boards/TaskColumn';
 import { DragDropContext } from '@hello-pangea/dnd';
-
-const initialData = {
-  tasks: {
-    'task-1': { id: 'task-1', content: 'Take out the garbage' },
-    'task-2': { id: 'task-2', content: 'Watch my favorite show' },
-    'task-3': { id: 'task-3', content: 'Charge my phone' },
-    'task-4': { id: 'task-4', content: 'Cook dinner' },
-    'task-5': { id: 'task-5', content: 'Go for a run' },
-    'task-6': { id: 'task-6', content: 'Read a book' },
-    'task-7': { id: 'task-7', content: 'Write a blog post' },
-    'task-8': { id: 'task-8', content: 'Go grocery shopping' },
-    'task-9': { id: 'task-9', content: 'Attend a meeting' },
-    'task-10': { id: 'task-10', content: 'Exercise for 30 minutes' },
-  },
-  columns: {
-    'column-1': {
-      id: 'column-1',
-      title: 'TODO',
-      taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
-    },
-    'column-2': {
-      id: 'column-2',
-      title: 'IN PROGRESS',
-      taskIds: ['task-5', 'task-6'],
-    },
-    'column-3': {
-      id: 'column-3',
-      title: 'DONE',
-      taskIds: ['task-7', 'task-8', 'task-9', 'task-10'],
-    },
-  },
-  // This helps us record the order of the columns.
-  columnOrder: ['column-1', 'column-2', 'column-3'],
-};
+import { useSelector } from 'react-redux';
+import {
+  reorderTasks,
+  selectColumnOrder,
+  selectColumns,
+  selectTasks,
+} from '../features/boards/boardSlice';
+import { useDispatch } from 'react-redux';
 
 function AppLayout() {
-  // This state will be used to manage the data of the boards.
-  const [todoData, setTodoData] = useState(initialData);
+  // We need to get the initial data from redux. Later, this will be fetched
+  // from local storage.
+  const tasks = useSelector(selectTasks);
+  const columns = useSelector(selectColumns);
+  const columnOrder = useSelector(selectColumnOrder);
+  const todoData = {
+    tasks,
+    columns,
+    columnOrder,
+  };
+
+  // We need to use the useDispatch hook to dispatch the action that will create
+  // a new task.
+  const dispatch = useDispatch();
 
   // This function is responsible for chainging the state of the data when a
   // drag and drop event occurs.
@@ -67,14 +52,12 @@ function AppLayout() {
     // If the source and destination are the same, we need to reorder the tasks
     // in the same column.
     if (startColumn === finishColumn) {
-      // Then, we need to create a new array of taskIds, and remove the task that
-      // was dragged from its position, to then add it to the new position.
+      // Then, we need to create a new array of taskIds, and remove the task that was dragged from its position, to then add it to the new position.
       const newTaskIds = Array.from(startColumn.taskIds);
       newTaskIds.splice(source.index, 1);
       newTaskIds.splice(destination.index, 0, draggableId);
 
-      // Then, we need to create a new column object, with the same properties as
-      // the original column, but with the new taskIds array.
+      // Then, we need to create a new column object, with the same properties as the original column, but with the new taskIds array.
       const newColumn = {
         ...startColumn,
         taskIds: newTaskIds,
@@ -88,7 +71,8 @@ function AppLayout() {
           [newColumn.id]: newColumn,
         },
       };
-      setTodoData(newState);
+      // We need to dispatch an action to update the state of the data.
+      dispatch(reorderTasks(newState));
       return;
     }
 
@@ -126,7 +110,8 @@ function AppLayout() {
       },
     };
 
-    setTodoData(newState);
+    // We need to dispatch an action to update the state of the data.
+    dispatch(reorderTasks(newState));
     return;
   }
 

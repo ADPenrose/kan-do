@@ -17,7 +17,7 @@ function TaskColumn({ column, type, tasks }) {
         />
       </div>
       {/* Add new task button */}
-      <ButtonAddTask />
+      <ButtonAddTask columnId={column.id} />
       {/* Tasks */}
       {/* We need to wrap all of our tasks inside of a Droppable component.
       The droppableId needs to be unique within the DragDropContext */}

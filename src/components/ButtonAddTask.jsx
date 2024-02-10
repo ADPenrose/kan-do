@@ -1,7 +1,16 @@
-function ButtonAddTask() {
+import { useDispatch } from 'react-redux';
+import { createTask } from '../features/boards/boardSlice';
+
+function ButtonAddTask({ columnId }) {
+  // We need to use the useDispatch hook to dispatch the action that will create
+  // a new task.
+  const dispatch = useDispatch();
   return (
     <div className="px-3">
-      <button className="w-full rounded-md bg-gray-300 text-xl text-gray-500">
+      <button
+        className="w-full rounded-md bg-gray-300 text-xl text-gray-500"
+        onClick={() => dispatch(createTask('test', `${columnId}`))}
+      >
         +
       </button>
     </div>

@@ -22,6 +22,8 @@ function Task({ task, index }) {
             <span className="font-bold capitalize">
               {task.id.replace('-', ' ')}
             </span>
+            {/* TODO: This needs to be replaced for a trash can icon
+            with a low opacity when idle, and completely visible on hover */}
             <HiOutlineDotsHorizontal size="1.2rem" color="#6b7280" />
           </div>
 
