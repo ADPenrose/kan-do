@@ -1,4 +1,4 @@
-import { HiChevronDown } from 'react-icons/hi';
+// import { HiChevronDown } from 'react-icons/hi';
 import Badge from '../../components/Badge';
 import ButtonAddTask from '../../components/ButtonAddTask';
 import Task from '../../components/Task';
@@ -10,11 +10,11 @@ function TaskColumn({ column, type, tasks }) {
       {/* Board title and dropdown button */}
       <div className="flex items-center justify-between p-3">
         <Badge text={column.title} type={type} />
-        <HiChevronDown
+        {/* <HiChevronDown
           className="hover:cursor-pointer"
           size="1.6rem"
           color="#6b7280"
-        />
+        /> */}
       </div>
       {/* Add new task button */}
       <ButtonAddTask columnId={column.id} />
@@ -32,7 +32,7 @@ function TaskColumn({ column, type, tasks }) {
           >
             {/* For each task, we render a task component. */}
             {tasks.map((task, index) => (
-              <Task key={task.id} task={task} index={index} />
+              <Task key={task.id} task={task} index={index} colId={column.id} />
             ))}
 
             {/* The Droppable component also provides a placeholder that we can

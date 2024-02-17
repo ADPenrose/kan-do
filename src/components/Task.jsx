@@ -1,7 +1,11 @@
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { HiTrash } from 'react-icons/hi';
 import { Draggable } from '@hello-pangea/dnd';
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '../features/boards/boardSlice';
 
-function Task({ task, index }) {
+function Task({ task, index, colId }) {
+  const dispatch = useDispatch();
+
   return (
     // We need to wrap each of our tasks inside of a Draggable component.
     // The index prop is used to maintain the order of the tasks, and it
@@ -24,7 +28,12 @@ function Task({ task, index }) {
             </span>
             {/* TODO: This needs to be replaced for a trash can icon
             with a low opacity when idle, and completely visible on hover */}
-            <HiOutlineDotsHorizontal size="1.2rem" color="#6b7280" />
+            <HiTrash
+              size="1.2rem"
+              color="#6b7280"
+              onClick={() => dispatch(deleteTask(task.id, colId))}
+              className="hover:cursor-pointer"
+            />
           </div>
 
           {/* Task body */}

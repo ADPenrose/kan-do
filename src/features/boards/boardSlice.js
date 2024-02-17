@@ -74,11 +74,30 @@ const boardSlice = createSlice({
       },
     },
     // TODO: Delete task action.
+    deleteTask: {
+      prepare(taskId, columnId) {
+        return {
+          payload: {
+            taskId,
+            columnId,
+          },
+        };
+      },
+      reducer(state, action) {
+        // We need to remove the task from the tasks object.
+        delete state.tasks[action.payload.taskId];
+        // We also need to remove the task from the column.
+        const index = state.columns[action.payload.columnId].taskIds.indexOf(
+          action.payload.taskId,
+        );
+        state.columns[action.payload.columnId].taskIds.splice(index, 1);
+      },
+    },
   },
 });
 
 // Exporting the action creators.
-export const { createTask, reorderTasks } = boardSlice.actions;
+export const { createTask, reorderTasks, deleteTask } = boardSlice.actions;
 
 // Exporting the reducer.
 export default boardSlice.reducer;
